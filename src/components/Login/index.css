@@ -1,0 +1,60 @@
+.flexCol {
+  display: flex;
+  flex-direction: column;
+}
+
+.logo {
+  width: 20vw;
+  padding: 20px;
+}
+
+.logoDiv {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.home {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: black;
+  color: white;
+}
+
+input {
+  background-color: transparent;
+  height: 35px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  border-width: 2px;
+  border-color: #64748b;
+  border-radius: 5px;
+  border-style: solid;
+  color: white;
+}
+
+.loginButton {
+  margin: auto;
+  width: 100px;
+}
+
+.loginDiv {
+  display: flex;
+  flex-direction: column;
+  width: 30vw;
+  background-color: #272727;
+  padding: 30px;
+  border-radius: 5px;
+}
+
+.hideErrorMessage {
+  display: none;
+}
+.errorMessage {
+  display: inline;
+  color: red;
+}

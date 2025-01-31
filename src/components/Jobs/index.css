@@ -1,0 +1,71 @@
+.jobs {
+  display: flex;
+  flex-direction: row;
+  padding: 20px;
+  background-color: black;
+  color: white;
+  min-height: 100vh;
+}
+.profile {
+  background-image: url('https://assets.ccbp.in/frontend/react-js/profile-bg.png');
+  width: 25vw;
+  border-radius: 5px;
+  background-size: cover;
+  background-repeat: no-repeat;
+  padding: 10px;
+  color: black;
+  margin-bottom: 15px;
+}
+
+.profileHead {
+  color: #6366f1;
+  font-weight: bolder;
+}
+
+.filters {
+  width: 25vw;
+  margin: 10px;
+}
+
+.jobsList {
+  padding: 20px;
+}
+
+.searchBar {
+  margin-left: 20px;
+  padding: 5px;
+  width: 25vw;
+}
+
+.results {
+  display: flex;
+  flex-direction: column;
+  width: 70vw;
+}
+
+.searchBarDiv {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+.searchIcon {
+  margin-top: 10px;
+  height: 30px;
+}
+.nojobs {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.noJobsImg {
+  height: 50vh;
+}
+
+.loaderDiv {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

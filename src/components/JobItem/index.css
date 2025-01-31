@@ -1,0 +1,44 @@
+.job {
+  background-color: #2c364c;
+  max-width: 70vw;
+  border-radius: 10px;
+  padding: 15px;
+  margin: 10px;
+}
+
+.companyLogo {
+  height: 80px;
+  padding: 10px;
+}
+
+.flexTitle {
+  display: flex;
+  flex-direction: row;
+  padding: 10px;
+}
+
+.details {
+  display: flex;
+  flex-direction: row;
+  width: 15vw;
+  justify-content: space-between;
+}
+
+.flexDetails {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.flexRow {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+.icon {
+  margin-top: 15px;
+  margin-right: 5px;
+}
+
+.link {
+  color: white;
+}

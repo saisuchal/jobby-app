@@ -1,0 +1,17 @@
+.retry {
+  color: white;
+  background-color: #6366f1;
+  padding: 10px;
+  border: 0px;
+  border-radius: 5px;
+  min-width: 75px;
+  text-align: center;
+}
+.failureView {
+  margin: auto;
+}
+.retryDiv {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
