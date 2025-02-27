@@ -11,16 +11,18 @@ const Home = () => {
   return (
     <>
       <Header />
-      <div className="home-ct">
-        <div className="homeText">
-          <h1>Find The Job That Fits Your Life</h1>
-          <p>
+      <div className="home-div">
+        <div className="home-text-div">
+          <h1 className="home-intro-heading">
+            Find The Job That Fits Your Life
+          </h1>
+          <p className="home-intro-para">
             Millions of people are searching for jobs, salary, information,
             company reviews. Find the job that fits your abilities and
             potential.
           </p>
           <Link to="/jobs">
-            <button className="findjobsButton" type="button">
+            <button className="find-jobs-button" type="button">
               Find Jobs
             </button>
           </Link>

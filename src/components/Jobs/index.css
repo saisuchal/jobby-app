@@ -1,4 +1,4 @@
-.jobs {
+.jobs-and-filters-div {
   display: flex;
   flex-direction: row;
   padding: 20px;
@@ -8,64 +8,132 @@
 }
 .profile {
   background-image: url('https://assets.ccbp.in/frontend/react-js/profile-bg.png');
-  width: 25vw;
-  border-radius: 5px;
   background-size: cover;
-  background-repeat: no-repeat;
+  width: 25vw;
   padding: 10px;
   color: black;
   margin-bottom: 15px;
+  border-radius: 30px;
+  height: 30vh;
 }
 
-.profileHead {
+.profile-head {
   color: #6366f1;
   font-weight: bolder;
 }
 
-.filters {
+.filters-div {
   width: 25vw;
-  margin: 10px;
+  margin-right: 20px;
+  position: sticky;
+  top: 10vh;
+  height: 90vh;
+  overflow-y: scroll;
 }
 
-.jobsList {
+.jobs-list {
+  padding: 0px;
+}
+
+.searchbar {
+  padding: 5px;
+  height: 30px;
+  background-color: transparent;
+  border: 0px;
+  color: white;
+  width: 30vw;
+}
+
+.results-div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 70vw;
   padding: 20px;
 }
 
-.searchBar {
-  margin-left: 20px;
-  padding: 5px;
-  width: 25vw;
-}
-
-.results {
+.no-jobs-div {
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
   width: 70vw;
+  padding: 20px;
 }
 
-.searchBarDiv {
+.search-bar-div {
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
+  border: 3px solid grey;
+  border-radius: 2px;
+  width: 30vw;
 }
-.searchIcon {
-  margin-top: 10px;
+.search-icon {
   height: 30px;
+  color: white;
+  background-color: transparent;
+  border: 0px;
 }
-.nojobs {
+.no-jobs-div {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   height: 100vh;
+  width: 70vw;
 }
 
-.noJobsImg {
+.no-jobs-img {
   height: 50vh;
 }
 
-.loaderDiv {
+.loader-div {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.no-jobs-sub-div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.retry-button {
+  color: white;
+  background-color: #6366f1;
+  padding: 10px;
+  border: 0px;
+  border-radius: 5px;
+  min-width: 75px;
+  text-align: center;
+}
+
+.retry-div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 25vw;
+  margin-bottom: 15px;
+  height: 30vh;
+}
+
+.loader-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 70vw;
+  height: 70vh;
+}
+.profile-loader-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  height: 30vh;
 }

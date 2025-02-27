@@ -28,11 +28,11 @@ const EmploymentFilters = props => {
 
   return (
     <>
-      <h1>Type of Employment</h1>
+      <h2>Type of Employment</h2>
       <ul>
         {employmentTypesList.map(employment => (
           <EmploymentFilterItem
-            key={employment.employmentTypeId}
+            key={`EMP${employment.employmentTypeId}`}
             employmentFilterItem={employment}
             employmentFilter={employmentFilter}
           />

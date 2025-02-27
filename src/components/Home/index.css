@@ -1,4 +1,23 @@
-.findjobsButton {
+.home-div {
+  background-image: url('https://assets.ccbp.in/frontend/react-js/home-lg-bg.png');
+  background-size: cover;
+  height: 100vh;
+  color: white;
+}
+.home-text-div {
+  width: 60vw;
+  padding: 50px;
+}
+
+.home-intro-heading {
+  font-size: 60px;
+}
+
+.home-intro-para {
+  font-size: 25px;
+}
+
+.find-jobs-button {
   background-color: #4f46e5;
   color: white;
   border: 0px solid;
@@ -7,14 +26,5 @@
   margin-right: 5px;
   padding: 10px;
   border-radius: 5px;
-}
-.home-ct {
-  background-image: url('https://assets.ccbp.in/frontend/react-js/home-lg-bg.png');
-  background-size: cover;
-  height: 100vh;
-  color: white;
-}
-.homeText {
-  width: 40vw;
-  padding: 50px;
+  font-size: 15px;
 }

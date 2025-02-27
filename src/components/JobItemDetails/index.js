@@ -5,6 +5,7 @@ import {FaStar, FaExternalLinkAlt} from 'react-icons/fa'
 import {MdLocationOn} from 'react-icons/md'
 import {BsBagFill} from 'react-icons/bs'
 import Header from '../Header'
+import FailureView from '../FailureView'
 import SimilarJob from '../SimilarJob'
 import './index.css'
 
@@ -21,37 +22,34 @@ class JobItemDetails extends Component {
   }
 
   fetchJobDetails = async () => {
-    console.log(this.props)
+    console.log('fetching job details')
     const {match} = this.props
     const {params} = match
     const {id} = params
     const jwtToken = Cookies.get('jwt_token')
-    if (jwtToken !== undefined) {
-      const url = `https://apis.ccbp.in/jobs/${id}`
-      console.log(url)
-      const options = {
-        headers: {
-          Authorization: `Bearer ${jwtToken}`,
-        },
-      }
-      const response = await fetch(url, options)
-      if (response.ok) {
-        const data = await response.json()
-        const {jobDetails, similarJobs} = this.formatJob(data)
-        const formattedJobDetails = this.formatJobDetails(jobDetails)
-        const formattedSimilarJobs = this.formatSimilarJobs(similarJobs)
-        this.setState({
-          isLoading: false,
-          formattedJobDetails,
-          formattedSimilarJobs,
-          failure: false,
-        })
-        return 'success'
-      }
-      this.setState({failure: true})
-      return 'failure'
+    const url = `https://apis.ccbp.in/jobs/${id}`
+    const options = {
+      headers: {
+        Authorization: `Bearer ${jwtToken}`,
+      },
     }
-    return 'no token'
+
+    const response = await fetch(url, options)
+    if (response.ok) {
+      const data = await response.json()
+      console.log(data)
+      const {jobDetails, similarJobs} = this.formatJob(data)
+      const formattedJobDetails = this.formatJobDetails(jobDetails)
+      const formattedSimilarJobs = this.formatSimilarJobs(similarJobs)
+      this.setState({
+        isLoading: false,
+        formattedJobDetails,
+        formattedSimilarJobs,
+        failure: false,
+      })
+    } else {
+      this.setState({isLoading: false, failure: true})
+    }
   }
 
   formatJob = job => ({
@@ -73,6 +71,7 @@ class JobItemDetails extends Component {
       location: jobDetails.location,
       packagePerAnnum: jobDetails.package_per_annum,
       rating: jobDetails.rating,
+      title: jobDetails.title,
     }
   }
 
@@ -98,99 +97,118 @@ class JobItemDetails extends Component {
     imageUrl: life.image_url,
   })
 
+  retryJobs = () => {
+    this.setState({isLoading: true, failure: false}, this.fetchJobDetails)
+  }
+
   jobItemDetails = () => {
-    const {formattedJobDetails, formattedSimilarJobs} = this.state
-    console.log(formattedJobDetails.title)
-    if (formattedJobDetails !== [] && formattedSimilarJobs !== []) {
-      const {skills, lifeAtCompany} = formattedJobDetails
-      return (
-        <div>
-          <Header />
-          <div className="jobItemDetails">
-            <div className="flexTitle">
-              <img
-                className="companyLogo"
-                src={formattedJobDetails.companyLogoUrl}
-                alt="job details company logo"
-              />
-              <h1>{formattedJobDetails.title}</h1>
+    const {formattedJobDetails, formattedSimilarJobs, failure} = this.state
+    const fetchSuccess =
+      formattedJobDetails.length !== 0 && formattedSimilarJobs.length !== 0
+    if (failure) {
+      return <FailureView retryJobs={this.retryJobs} />
+    }
+    return (
+      fetchSuccess && (
+        <div className="job-details-bg">
+          <div className="flex-title">
+            <img
+              className="company-logo"
+              src={formattedJobDetails.companyLogoUrl}
+              alt="job details company logo"
+            />
+            <div>
+              <h1 className="job-details-heading" style={{marginTop: '5px'}}>
+                {formattedJobDetails.title}
+              </h1>
               <p>
-                {' '}
-                <FaStar />
+                <FaStar className="icon" fill="gold" />
                 {formattedJobDetails.rating}
               </p>
             </div>
-            <div className="flexDetails">
-              <div className="details">
+          </div>
+          <div className="flex-details">
+            <div className="job-and-location">
+              <div className="location">
                 <p>
-                  <MdLocationOn /> {formattedJobDetails.location}
+                  <MdLocationOn className="icon" />
+                  {formattedJobDetails.location}
                 </p>
+              </div>
+              <div className="job-type">
                 <p>
-                  <BsBagFill />
+                  <BsBagFill className="icon" />
                   {formattedJobDetails.employmentType}
                 </p>
               </div>
-              <p>{formattedJobDetails.packagePerAnnum}</p>
             </div>
-            <hr />
-            <div className="description">
-              <div className="descriptionHead">
-                <h1>Description</h1>
-                <a
-                  className="hyperlink"
-                  href={formattedJobDetails.companyWebsiteUrl}
-                >
-                  Visit
-                  <FaExternalLinkAlt />
-                </a>
-              </div>
-              <p>{formattedJobDetails.jobDescription}</p>
-            </div>
-            <h1>Skills</h1>
-            <ul className="listRow">
-              {skills.map(skill => (
-                <li key={skill.name} className="listItem">
-                  <img src={skill.imageUrl} alt={skill.name} />
-                  <p>{skill.name}</p>
-                </li>
-              ))}
-            </ul>
-            <div className="flexTitle">
-              <div>
-                <h1>Life at Company</h1>
-                <p>{lifeAtCompany.description}</p>
-              </div>
-              <div>
-                <img src={lifeAtCompany.imageUrl} alt="life at company" />
-              </div>
-            </div>
-            <h1>Similar Jobs</h1>
-            <ul className="similarjobs">
-              {formattedSimilarJobs.map(job => (
-                <SimilarJob job={job} key={job.id} />
-              ))}
-            </ul>
+            <p>{formattedJobDetails.packagePerAnnum}</p>
           </div>
+          <hr />
+          <div className="description">
+            <div className="description-head">
+              <h2>Description</h2>
+              <a
+                className="company-hyperlink"
+                href={formattedJobDetails.companyWebsiteUrl}
+              >
+                Visit
+                <FaExternalLinkAlt />
+              </a>
+            </div>
+            <p className="para-line">{formattedJobDetails.jobDescription}</p>
+          </div>
+          <h3>Skills</h3>
+          <ul className="list-row">
+            {formattedJobDetails.skills.map(skill => (
+              <li key={`skill-${skill.name}`} className="list-item">
+                <img src={skill.imageUrl} alt={skill.name} />
+                <p>{skill.name}</p>
+              </li>
+            ))}
+          </ul>
+          <div className="flex-title">
+            <div>
+              <h3>Life at Company</h3>
+              <p className="para-line">
+                {formattedJobDetails.lifeAtCompany.description}
+              </p>
+            </div>
+            <div>
+              <img
+                src={formattedJobDetails.lifeAtCompany.imageUrl}
+                alt="life at company"
+              />
+            </div>
+          </div>
+          <h1>Similar Jobs</h1>
+          <ul className="similar-jobs">
+            {formattedSimilarJobs.map(job => (
+              <SimilarJob job={job} key={`similar-${job.id}`} />
+            ))}
+          </ul>
         </div>
       )
-    }
-    return 'job item'
+    )
   }
 
   render() {
-    const {isLoading, failure} = this.state
-
+    const {isLoading} = this.state
     const loader = (
-      <div className="loader-container" data-testid="loader">
-        <Loader type="ThreeDots" color="#ffffff" height="50" width="50" />
+      <div data-testid="loader">
+        <Loader
+          color="white"
+          type="ThreeDots"
+          className="details-loader-container"
+        />
       </div>
     )
-    if (failure === false && isLoading === false) {
-      const jobDetails = this.jobItemDetails()
-      return jobDetails
-    }
-
-    return loader
+    return (
+      <div className="job-item-details-div">
+        <Header />
+        {isLoading ? loader : this.jobItemDetails()}
+      </div>
+    )
   }
 }
 

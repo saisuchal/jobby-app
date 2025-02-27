@@ -17,30 +17,30 @@ const JobItem = props => {
     title,
   } = job
   return (
-    <Link to={`/jobs/${id}`}>
-      <li className="link">
-        <div className="job">
-          <div className="flexTitle">
+    <Link to={`/jobs/${id}`} className="link-style">
+      <li className="job-item-list-item">
+        <div className="job-item-div">
+          <div className="flex-title">
             <img
-              className="companyLogo"
+              className="job-item-company-logo"
               src={companyLogoUrl}
               alt="company logo"
             />
-            <div className="title">
-              <h1>{title}</h1>
-              <div className="flexRow">
-                <FaStar className="icon" />
+            <div>
+              <h2 style={{margin: '5px'}}>{title}</h2>
+              <div className="flex-row">
+                <FaStar className="icon" fill="gold" />
                 <p>{rating}</p>
               </div>
             </div>
           </div>
-          <div className="flexDetails">
-            <div className="details">
-              <div className="flexRow">
+          <div className="flex-details">
+            <div className="job-and-location">
+              <div className="location">
                 <MdLocationOn className="icon" />
                 <p>{location}</p>
               </div>
-              <div className="flexRow">
+              <div className="job-type">
                 <BsBagFill className="icon" />
                 <p>{employmentType}</p>
               </div>

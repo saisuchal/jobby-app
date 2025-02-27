@@ -7,9 +7,8 @@ const EmploymentFilterItem = props => {
     employmentFilter(employmentFilterItem.employmentTypeId)
   }
   return (
-    <li value={employmentFilterItem.employmentTypeId}>
+    <li value={employmentFilterItem.employmentTypeId} className="filter-item">
       <input
-        className="inputLabel"
         type="checkbox"
         id={employmentFilterItem.employmentTypeId}
         onClick={employmentInput}

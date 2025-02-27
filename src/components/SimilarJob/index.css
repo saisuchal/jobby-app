@@ -1,10 +1,10 @@
-.similarDiv {
-  width: 30vw;
+.similar-div {
+  width: 25vw;
   margin: 10px;
-  padding: 10px;
+  padding: 20px;
   background-color: grey;
   border-radius: 5px;
-  color:white;
+  color: white;
 }
 
 .job {
@@ -15,17 +15,19 @@
   margin: 10px;
 }
 
-.companyLogo {
+.company-logo {
   height: 80px;
-  padding: 10px;
 }
 
-.flexTitle {
+.similar-flex-title {
   display: flex;
   flex-direction: row;
   padding: 0px;
+  margin: 0px;
 }
-
+.title {
+  margin: 0px;
+}
 .details {
   display: flex;
   flex-direction: row;
@@ -33,7 +35,7 @@
   justify-content: space-between;
 }
 
-.flexDetails {
+.flex-details {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
@@ -45,4 +47,12 @@
 
 .heading {
   margin: 0px;
+}
+
+.para-line {
+  line-height: 1.6;
+}
+
+.icon {
+  margin-right: 5px;
 }

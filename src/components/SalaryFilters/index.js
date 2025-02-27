@@ -28,11 +28,11 @@ const SalaryFilters = props => {
 
   return (
     <form>
-      <h1>Salary Range</h1>
+      <h2>Salary Range</h2>
       <ul id="group">
         {salaryRangesList.map(salary => (
           <SalaryFilterItem
-            key={salary.salaryRangeId}
+            key={`SAL${salary.salaryRangeId}`}
             salary={salary}
             salaryFilter={salaryFilter}
           />
