@@ -4,7 +4,7 @@
   justify-content: space-between;
   background-color: #272727;
   padding: 15px;
-  max-height: 10vh;
+  height: 10vh;
   position: sticky;
   top: 0;
 }

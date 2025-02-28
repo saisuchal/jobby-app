@@ -1,9 +1,10 @@
 import './index.css'
 
 const FailureView = props => {
-  const {retryJobs} = props
+  const {retry} = props
   const clickRetry = () => {
-    retryJobs()
+    console.log('retry')
+    retry()
   }
   return (
     <div className="failure-div">

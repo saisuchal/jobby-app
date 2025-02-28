@@ -10,6 +10,20 @@ import LocationFilters from '../LocationFilters'
 import JobItem from '../JobItem'
 import './index.css'
 
+const profileApiConstants = {
+  initial: 'INITIAL',
+  success: 'SUCCESS',
+  failure: 'FAILURE',
+  inProgress: 'IN_PROGRESS',
+}
+
+const jobsApiConstants = {
+  initial: 'INITIAL',
+  success: 'SUCCESS',
+  failure: 'FAILURE',
+  inProgress: 'IN_PROGRESS',
+}
+
 class Jobs extends Component {
   state = {
     profileDetails: '',
@@ -18,11 +32,9 @@ class Jobs extends Component {
     salaryFilter: '1000000',
     searchInput: '',
     fetchedJobs: [],
-    isLoading: true,
-    isProfileLoading: true,
-    noJobs: false,
-    jobsFailure: false,
-    profileFailure: false,
+    profileStatus: profileApiConstants.inProgress,
+    jobsStatus: jobsApiConstants.inProgress,
+    total: '',
   }
 
   componentDidMount() {
@@ -34,27 +46,30 @@ class Jobs extends Component {
     console.log('fetching profile')
     const url = 'https://apis.ccbp.in/profile'
     const jwtToken = Cookies.get('jwt_token')
+    const options = {
+      headers: {
+        Authorization: `Bearer ${jwtToken}`,
+      },
+    }
+
     try {
-      const options = {
-        headers: {
-          Authorization: `Bearer ${jwtToken}`,
-        },
-      }
       const response = await fetch(url, options)
       if (response.ok) {
         const data = await response.json()
-        console.log(data)
-        const {profileDetails} = this.dataCamelCase(data)
+        const {profileDetails} = this.profileCamelCase(data.profile_details)
         this.setState({
-          isProfileLoading: false,
-          profileFailure: false,
+          profileStatus: profileApiConstants.success,
           profileDetails,
         })
       } else {
-        this.setState({isProfileLoading: false, profileFailure: true})
+        this.setState({
+          profileStatus: profileApiConstants.failure,
+        })
       }
     } catch (e) {
-      this.setState({isProfileLoading: false, profileFailure: true})
+      this.setState({
+        profileStatus: profileApiConstants.failure,
+      })
     }
   }
 
@@ -70,28 +85,23 @@ class Jobs extends Component {
 
     try {
       const response = await fetch(url, options)
-      const data = await response.json()
       if (response.ok) {
+        const data = await response.json()
         const {jobs, total} = data
         const fetchedJobs = this.formatJobs(jobs)
-        if (total === 0) {
-          this.setState({isLoading: false, noJobs: true, jobsFailure: false})
-        } else {
-          this.setState(
-            {
-              isLoading: false,
-              noJobs: false,
-              jobsFailure: false,
-              fetchedJobs,
-            },
-            this.filterByLocation,
-          )
-        }
+        this.setState(
+          {
+            total,
+            fetchedJobs,
+            jobsStatus: jobsApiConstants.success,
+          },
+          this.filterByLocation,
+        )
       } else {
-        this.setState({isLoading: false, jobsFailure: true})
+        this.setState({jobsStatus: jobsApiConstants.failure})
       }
     } catch (e) {
-      this.setState({isLoading: false, jobsFailure: true})
+      this.setState({jobsStatus: jobsApiConstants.failure})
     }
   }
 
@@ -115,13 +125,11 @@ class Jobs extends Component {
   }
 
   profileCamelCase = data => ({
-    name: data.name,
-    profileImageUrl: data.profile_image_url,
-    shortBio: data.short_bio,
-  })
-
-  dataCamelCase = data => ({
-    profileDetails: this.profileCamelCase(data.profile_details),
+    profileDetails: {
+      name: data.name,
+      profileImageUrl: data.profile_image_url,
+      shortBio: data.short_bio,
+    },
   })
 
   searchFilter = event => {
@@ -129,12 +137,8 @@ class Jobs extends Component {
     this.setState({searchInput: value})
   }
 
-  search = () => {
-    this.setState({isLoading: true}, this.fetchJobs)
-  }
-
   salaryFilterUpdate = salary => {
-    this.setState({salaryFilter: salary}, this.search)
+    this.setState({salaryFilter: salary}, this.fetchJobs)
   }
 
   employmentFilterUpdate = employment => {
@@ -145,7 +149,7 @@ class Jobs extends Component {
     } else {
       employmentFilter.push(employment)
     }
-    this.setState({employmentFilter}, this.search)
+    this.setState({employmentFilter}, this.fetchJobs)
   }
 
   locationFilterUpdate = location => {
@@ -156,7 +160,7 @@ class Jobs extends Component {
     } else {
       locationFilter.push(location)
     }
-    this.setState({locationFilter}, this.search)
+    this.setState({locationFilter}, this.fetchJobs)
   }
 
   filterByLocation = () => {
@@ -170,39 +174,56 @@ class Jobs extends Component {
     }
     if (locationFilter.length !== 0) {
       locationFilter.forEach(location => filterByEachLocation(location))
-      this.setState({fetchedJobs: filteredJobs, isLoading: false})
-    } else {
-      this.setState({isLoading: false})
+      this.setState({fetchedJobs: filteredJobs})
     }
   }
 
-  retryJobs = () => {
-    console.log('retrying jobs')
-    this.setState({isLoading: true, jobsFailure: false}, this.fetchJobs)
-  }
-
-  retryProfile = () => {
-    console.log('retrying profile')
-    this.setState(
-      {isProfileLoading: true, profileFailure: false},
-      this.getProfile,
+  jobsView = () => {
+    const {total, jobsStatus, profileStatus, fetchedJobs} = this.state
+    const loader = (
+      <div data-testid="loader">
+        <Loader color="white" type="ThreeDots" className="loader-container" />
+      </div>
     )
+
+    const jobs = (
+      <div>
+        {total > 0 ? (
+          <ul className="jobs-list">
+            {fetchedJobs.map(job => (
+              <JobItem key={`JOB${job.id}`} job={job} />
+            ))}
+          </ul>
+        ) : (
+          <div className="no-jobs-div">
+            <img
+              className="no-jobs-img"
+              src="https://assets.ccbp.in/frontend/react-js/no-jobs-img.png"
+              alt="no jobs"
+            />
+            <h1>No Jobs Found</h1>
+            <p>We could not find any jobs. Try other filters</p>
+          </div>
+        )}
+      </div>
+    )
+
+    const jobsFailureView = <FailureView retry={this.fetchJobs} />
+
+    switch (true) {
+      case profileStatus === profileApiConstants.success &&
+        jobsStatus === jobsApiConstants.success:
+        return jobs
+      case jobsStatus === jobsApiConstants.failure:
+        return jobsFailureView
+      default:
+        return loader
+    }
   }
 
-  render() {
-    const {
-      isLoading,
-      searchInput,
-      noJobs,
-      isProfileLoading,
-      profileFailure,
-      profileDetails,
-      jobsFailure,
-      fetchedJobs,
-    } = this.state
-
+  profileView = () => {
+    const {profileStatus, jobsStatus, profileDetails} = this.state
     const {name, profileImageUrl, shortBio} = profileDetails
-
     const profileLoader = (
       <Loader
         data-testid="loader"
@@ -211,61 +232,40 @@ class Jobs extends Component {
         className="profile-loader-container"
       />
     )
-
-    const loader = (
-      <div data-testid="loader">
-        <Loader color="white" type="ThreeDots" className="loader-container" />
-      </div>
-    )
-
-    const jobsView = () => {
-      const jobItemsView = jobsFailure ? (
-        <FailureView retryJobs={this.retryJobs} />
-      ) : (
-        <ul className="jobs-list">
-          {fetchedJobs.map(job => (
-            <JobItem key={`JOB${job.id}`} job={job} />
-          ))}
-        </ul>
-      )
-
-      const noJobsView = (
-        <div className="no-jobs-div">
-          <img
-            className="no-jobs-img"
-            src="https://assets.ccbp.in/frontend/react-js/no-jobs-img.png"
-            alt="no jobs"
-          />
-          <h1>No Jobs Found</h1>
-          <p>We could not find any jobs. Try other filters</p>
-        </div>
-      )
-
-      return noJobs ? noJobsView : jobItemsView
-    }
-
-    const profileSection = profileFailure ? (
+    const profileFailureView = (
       <div className="retry-div">
         <button
           type="button"
           className="retry-button"
-          onClick={this.retryProfile}
+          onClick={this.getProfile}
         >
           Retry
         </button>
       </div>
-    ) : (
+    )
+
+    const profileView = (
       <div className="profile">
         <img src={profileImageUrl} alt="profile" />
         <h1 className="profile-head">{name}</h1>
         <p>{shortBio}</p>
       </div>
     )
-    const DisplayProfile = () =>
-      isProfileLoading ? profileLoader : profileSection
+    switch (true) {
+      case profileStatus === profileApiConstants.success &&
+        jobsStatus === jobsApiConstants.success:
+        return profileView
+      case profileStatus === profileApiConstants.failure:
+        return profileFailureView
+      default:
+        return profileLoader
+    }
+  }
 
-    const DisplayJobs = () => (isLoading ? loader : jobsView())
-
+  render() {
+    const {searchInput} = this.state
+    const DisplayJobs = () => this.jobsView()
+    const DisplayProfile = () => this.profileView()
     return (
       <div>
         <Header />
@@ -302,7 +302,7 @@ class Jobs extends Component {
                 className="search-icon"
                 type="button"
                 data-testid="searchButton"
-                onClick={this.search}
+                onClick={this.fetchJobs}
               >
                 <BsSearch className="search-icon" />
               </button>
