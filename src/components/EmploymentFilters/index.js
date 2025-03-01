@@ -27,7 +27,7 @@ const EmploymentFilters = props => {
   }
 
   return (
-    <>
+    <div>
       <h2>Type of Employment</h2>
       <ul>
         {employmentTypesList.map(employment => (
@@ -38,7 +38,7 @@ const EmploymentFilters = props => {
           />
         ))}
       </ul>
-    </>
+    </div>
   )
 }
 

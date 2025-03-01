@@ -10,14 +10,7 @@ import LocationFilters from '../LocationFilters'
 import JobItem from '../JobItem'
 import './index.css'
 
-const profileApiConstants = {
-  initial: 'INITIAL',
-  success: 'SUCCESS',
-  failure: 'FAILURE',
-  inProgress: 'IN_PROGRESS',
-}
-
-const jobsApiConstants = {
+const apiStatusConstants = {
   initial: 'INITIAL',
   success: 'SUCCESS',
   failure: 'FAILURE',
@@ -32,8 +25,8 @@ class Jobs extends Component {
     salaryFilter: '1000000',
     searchInput: '',
     fetchedJobs: [],
-    profileStatus: profileApiConstants.inProgress,
-    jobsStatus: jobsApiConstants.inProgress,
+    profileStatus: apiStatusConstants.inProgress,
+    jobsStatus: apiStatusConstants.inProgress,
     total: '',
   }
 
@@ -58,17 +51,17 @@ class Jobs extends Component {
         const data = await response.json()
         const {profileDetails} = this.profileCamelCase(data.profile_details)
         this.setState({
-          profileStatus: profileApiConstants.success,
+          profileStatus: apiStatusConstants.success,
           profileDetails,
         })
       } else {
         this.setState({
-          profileStatus: profileApiConstants.failure,
+          profileStatus: apiStatusConstants.failure,
         })
       }
     } catch (e) {
       this.setState({
-        profileStatus: profileApiConstants.failure,
+        profileStatus: apiStatusConstants.failure,
       })
     }
   }
@@ -93,15 +86,15 @@ class Jobs extends Component {
           {
             total,
             fetchedJobs,
-            jobsStatus: jobsApiConstants.success,
+            jobsStatus: apiStatusConstants.success,
           },
           this.filterByLocation,
         )
       } else {
-        this.setState({jobsStatus: jobsApiConstants.failure})
+        this.setState({jobsStatus: apiStatusConstants.failure})
       }
     } catch (e) {
-      this.setState({jobsStatus: jobsApiConstants.failure})
+      this.setState({jobsStatus: apiStatusConstants.failure})
     }
   }
 
@@ -180,6 +173,7 @@ class Jobs extends Component {
 
   jobsView = () => {
     const {total, jobsStatus, profileStatus, fetchedJobs} = this.state
+    console.log(fetchedJobs)
     const loader = (
       <div data-testid="loader">
         <Loader color="white" type="ThreeDots" className="loader-container" />
@@ -211,10 +205,9 @@ class Jobs extends Component {
     const jobsFailureView = <FailureView retry={this.fetchJobs} />
 
     switch (true) {
-      case profileStatus === profileApiConstants.success &&
-        jobsStatus === jobsApiConstants.success:
+      case jobsStatus === apiStatusConstants.success:
         return jobs
-      case jobsStatus === jobsApiConstants.failure:
+      case jobsStatus === apiStatusConstants.failure:
         return jobsFailureView
       default:
         return loader
@@ -225,15 +218,27 @@ class Jobs extends Component {
     const {profileStatus, jobsStatus, profileDetails} = this.state
     const {name, profileImageUrl, shortBio} = profileDetails
     const profileLoader = (
-      <Loader
-        data-testid="loader"
-        color="white"
-        type="ThreeDots"
-        className="profile-loader-container"
-      />
+      <div data-testid="loader">
+        <Loader
+          color="white"
+          type="ThreeDots"
+          className="profile-loader-container"
+        />
+      </div>
     )
+
+    const profile = (
+      <div className="profile-div">
+        <div className="profile-success-div">
+          <img src={profileImageUrl} alt="profile" />
+          <h1 className="profile-head">{name}</h1>
+          <p>{shortBio}</p>
+        </div>
+      </div>
+    )
+
     const profileFailureView = (
-      <div className="retry-div">
+      <div className="profile-div">
         <button
           type="button"
           className="retry-button"
@@ -244,18 +249,11 @@ class Jobs extends Component {
       </div>
     )
 
-    const profileView = (
-      <div className="profile">
-        <img src={profileImageUrl} alt="profile" />
-        <h1 className="profile-head">{name}</h1>
-        <p>{shortBio}</p>
-      </div>
-    )
     switch (true) {
-      case profileStatus === profileApiConstants.success &&
-        jobsStatus === jobsApiConstants.success:
-        return profileView
-      case profileStatus === profileApiConstants.failure:
+      case profileStatus === apiStatusConstants.success &&
+        jobsStatus === apiStatusConstants.success:
+        return profile
+      case profileStatus === apiStatusConstants.failure:
         return profileFailureView
       default:
         return profileLoader
@@ -264,6 +262,7 @@ class Jobs extends Component {
 
   render() {
     const {searchInput} = this.state
+    console.log(this.state)
     const DisplayJobs = () => this.jobsView()
     const DisplayProfile = () => this.profileView()
     return (

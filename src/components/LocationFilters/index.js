@@ -26,7 +26,7 @@ const LocationFilters = props => {
   }
 
   return (
-    <>
+    <div>
       <h2>Location</h2>
       <ul>
         {locationsList.map(location => (
@@ -37,7 +37,7 @@ const LocationFilters = props => {
           />
         ))}
       </ul>
-    </>
+    </div>
   )
 }
 

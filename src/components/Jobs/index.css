@@ -6,13 +6,21 @@
   color: white;
   min-height: 100vh;
 }
-.profile {
+.profile-div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 25vw;
+  margin-bottom: 15px;
+  height: 30vh;
+}
+
+.profile-success-div {
   background-image: url('https://assets.ccbp.in/frontend/react-js/profile-bg.png');
   background-size: cover;
   width: 25vw;
   padding: 10px;
   color: black;
-  margin-bottom: 15px;
   border-radius: 30px;
   height: 25vh;
 }
@@ -29,6 +37,7 @@
   top: 12vh;
   height: 90vh;
   overflow-y: scroll;
+  padding-bottom:20px;
 }
 
 .jobs-list {
@@ -111,15 +120,6 @@
   border-radius: 5px;
   min-width: 75px;
   text-align: center;
-}
-
-.retry-div {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 25vw;
-  margin-bottom: 15px;
-  height: 30vh;
 }
 
 .loader-container {

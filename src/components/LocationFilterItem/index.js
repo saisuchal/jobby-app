@@ -2,7 +2,6 @@ import './index.css'
 
 const LocationFilterItem = props => {
   const {locationFilterItem, locationFilter} = props
-
   const locationInput = () => {
     locationFilter(locationFilterItem.location)
   }

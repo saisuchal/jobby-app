@@ -27,7 +27,7 @@ const SalaryFilters = props => {
   }
 
   return (
-    <form>
+    <div>
       <h2>Salary Range</h2>
       <ul id="group">
         {salaryRangesList.map(salary => (
@@ -38,7 +38,7 @@ const SalaryFilters = props => {
           />
         ))}
       </ul>
-    </form>
+    </div>
   )
 }
 
