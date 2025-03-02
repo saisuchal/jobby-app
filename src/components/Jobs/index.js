@@ -71,7 +71,7 @@ class Jobs extends Component {
     console.log('fetching jobs')
     this.setState({jobsStatus: apiStatusConstants.inProgress})
     const jwtToken = Cookies.get('jwt_token')
-    const url = 'this.formatUrl()'
+    const url = this.formatUrl()
     const options = {
       headers: {
         Authorization: `Bearer ${jwtToken}`,
