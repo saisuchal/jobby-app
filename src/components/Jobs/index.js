@@ -175,7 +175,6 @@ class Jobs extends Component {
 
   jobsView = () => {
     const {total, jobsStatus, fetchedJobs} = this.state
-    console.log(fetchedJobs)
     const loader = (
       <div data-testid="loader">
         <Loader color="white" type="ThreeDots" className="loader-container" />
@@ -184,7 +183,7 @@ class Jobs extends Component {
 
     const jobs = (
       <div>
-        {total > 0 ? (
+        {jobsStatus === apiStatusConstants.success && total > 0 ? (
           <ul className="jobs-list">
             {fetchedJobs.map(job => (
               <JobItem key={`JOB${job.id}`} job={job} />
@@ -200,6 +199,9 @@ class Jobs extends Component {
             <h1>No Jobs Found</h1>
             <p>We could not find any jobs. Try other filters</p>
           </div>
+        )}
+        {jobsStatus === apiStatusConstants.failure && (
+          <FailureView retry={this.fetchJobs} />
         )}
       </div>
     )
@@ -221,6 +223,7 @@ class Jobs extends Component {
   profileView = () => {
     const {profileStatus, jobsStatus, profileDetails} = this.state
     const {name, profileImageUrl, shortBio} = profileDetails
+
     const profileLoader = (
       <div data-testid="loader">
         <Loader
@@ -231,38 +234,36 @@ class Jobs extends Component {
       </div>
     )
 
-    const profile = (
-      <div className="profile-div">
-        <div className="profile-success-div">
-          <img src={profileImageUrl} alt="profile" />
-          <h1 className="profile-head">{name}</h1>
-          <p>{shortBio}</p>
+    const profile =
+      profileStatus === apiStatusConstants.failure ? (
+        <div className="profile-div">
+          <button
+            type="button"
+            className="retry-button"
+            onClick={this.getProfile}
+          >
+            Retry
+          </button>
         </div>
-      </div>
-    )
-
-    const profileFailureView = (
-      <div className="profile-div">
-        <button
-          type="button"
-          className="retry-button"
-          onClick={this.getProfile}
-        >
-          Retry
-        </button>
-      </div>
-    )
+      ) : (
+        <div className="profile-div">
+          <div className="profile-success-div">
+            <img src={profileImageUrl} alt="profile" />
+            <h1 className="profile-head">{name}</h1>
+            <p>{shortBio}</p>
+          </div>
+        </div>
+      )
 
     switch (true) {
-      case profileStatus === apiStatusConstants.success &&
-        jobsStatus === apiStatusConstants.success:
+      case (profileStatus === apiStatusConstants.success &&
+        jobsStatus === apiStatusConstants.success) ||
+        profileStatus === apiStatusConstants.failure:
         return profile
-      case profileStatus === apiStatusConstants.failure:
-        return profileFailureView
       case profileStatus === apiStatusConstants.inProgress:
         return profileLoader
       default:
-        return profileFailureView
+        return null
     }
   }
 

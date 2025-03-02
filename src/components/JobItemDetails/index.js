@@ -18,7 +18,7 @@ const jobItemConstants = {
 
 class JobItemDetails extends Component {
   state = {
-    jobItemStatus: jobItemConstants.inProgress,
+    jobItemStatus: jobItemConstants.initial,
     formattedJobDetails: [],
     formattedSimilarJobs: [],
   }
@@ -29,6 +29,7 @@ class JobItemDetails extends Component {
 
   fetchJobDetails = async () => {
     console.log('fetching job details')
+    this.setState({jobItemStatus: jobItemConstants.inProgress})
     const {match} = this.props
     const {params} = match
     const {id} = params
@@ -206,8 +207,10 @@ class JobItemDetails extends Component {
         return jobItemDetails
       case jobItemStatus === jobItemConstants.failure:
         return jobItemFailure
-      default:
+      case jobItemStatus === jobItemConstants.inProgress:
         return loader
+      default:
+        return null
     }
   }
 

@@ -1,16 +1,27 @@
 .jobs-and-filters-div {
   display: flex;
   flex-direction: row;
+  justify-content: space-around;
   padding: 20px;
   background-color: black;
   color: white;
   min-height: 100vh;
 }
+.filters-div {
+  max-width: 25vw;
+  margin-right: 20px;
+  position: sticky;
+  top: 12vh;
+  height: 90vh;
+  overflow-y: scroll;
+  padding-bottom: 20px;
+}
+
 .profile-div {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 25vw;
+  max-width: 25vw;
   margin-bottom: 15px;
   height: 25vh;
 }
@@ -18,7 +29,7 @@
 .profile-success-div {
   background-image: url('https://assets.ccbp.in/frontend/react-js/profile-bg.png');
   background-size: cover;
-  width: 25vw;
+  max-width: 25vw;
   padding: 10px;
   color: black;
   border-radius: 30px;
@@ -31,21 +42,12 @@
   justify-content: center;
   align-items: center;
   height: 25vh;
+  max-width: 25vw;
 }
 
 .profile-head {
   color: #6366f1;
   font-weight: bolder;
-}
-
-.filters-div {
-  width: 25vw;
-  margin-right: 20px;
-  position: sticky;
-  top: 12vh;
-  height: 90vh;
-  overflow-y: scroll;
-  padding-bottom: 20px;
 }
 
 .jobs-list {
