@@ -4,4 +4,15 @@
   align-items: center;
   justify-content: center;
   min-height: 100vh;
+  background-color: black;
+  color: white;
+}
+
+.back-to-home-button {
+  background-color: rgb(45, 110, 208);
+  padding: 10px;
+  color: white;
+  font-weight: 500;
+  border:0px;
+  border-radius:10px;
 }

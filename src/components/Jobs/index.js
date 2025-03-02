@@ -256,8 +256,7 @@ class Jobs extends Component {
       )
 
     switch (true) {
-      case (profileStatus === apiStatusConstants.success &&
-        jobsStatus === apiStatusConstants.success) ||
+      case profileStatus === apiStatusConstants.success ||
         profileStatus === apiStatusConstants.failure:
         return profile
       case profileStatus === apiStatusConstants.inProgress:
