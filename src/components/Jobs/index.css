@@ -12,7 +12,7 @@
   align-items: center;
   width: 25vw;
   margin-bottom: 15px;
-  height: 30vh;
+  height: 25vh;
 }
 
 .profile-success-div {
@@ -22,6 +22,14 @@
   padding: 10px;
   color: black;
   border-radius: 30px;
+  height: 25vh;
+}
+
+.profile-loader-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
   height: 25vh;
 }
 
@@ -37,7 +45,7 @@
   top: 12vh;
   height: 90vh;
   overflow-y: scroll;
-  padding-bottom:20px;
+  padding-bottom: 20px;
 }
 
 .jobs-list {
@@ -130,10 +138,4 @@
   width: 70vw;
   height: 70vh;
 }
-.profile-loader-container {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  height: 30vh;
-}
+

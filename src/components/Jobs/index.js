@@ -25,8 +25,8 @@ class Jobs extends Component {
     salaryFilter: '1000000',
     searchInput: '',
     fetchedJobs: [],
-    profileStatus: apiStatusConstants.inProgress,
-    jobsStatus: apiStatusConstants.inProgress,
+    profileStatus: apiStatusConstants.initial,
+    jobsStatus: apiStatusConstants.initial,
     total: '',
   }
 
@@ -37,6 +37,7 @@ class Jobs extends Component {
 
   getProfile = async () => {
     console.log('fetching profile')
+    this.setState({profileStatus: apiStatusConstants.inProgress})
     const url = 'https://apis.ccbp.in/profile'
     const jwtToken = Cookies.get('jwt_token')
     const options = {
@@ -68,8 +69,9 @@ class Jobs extends Component {
 
   fetchJobs = async () => {
     console.log('fetching jobs')
+    this.setState({jobsStatus: apiStatusConstants.inProgress})
     const jwtToken = Cookies.get('jwt_token')
-    const url = this.formatUrl()
+    const url = 'this.formatUrl()'
     const options = {
       headers: {
         Authorization: `Bearer ${jwtToken}`,
@@ -172,7 +174,7 @@ class Jobs extends Component {
   }
 
   jobsView = () => {
-    const {total, jobsStatus, profileStatus, fetchedJobs} = this.state
+    const {total, jobsStatus, fetchedJobs} = this.state
     console.log(fetchedJobs)
     const loader = (
       <div data-testid="loader">
@@ -209,8 +211,10 @@ class Jobs extends Component {
         return jobs
       case jobsStatus === apiStatusConstants.failure:
         return jobsFailureView
-      default:
+      case jobsStatus === apiStatusConstants.inProgress:
         return loader
+      default:
+        return null
     }
   }
 
@@ -255,8 +259,10 @@ class Jobs extends Component {
         return profile
       case profileStatus === apiStatusConstants.failure:
         return profileFailureView
-      default:
+      case profileStatus === apiStatusConstants.inProgress:
         return profileLoader
+      default:
+        return profileFailureView
     }
   }
 
