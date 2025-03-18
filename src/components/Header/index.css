@@ -3,7 +3,8 @@
   flex-direction: row;
   justify-content: space-between;
   background-color: #272727;
-  padding: 15px;
+  padding-left: 15px;
+  padding-right: 15px;
   height: 10vh;
   position: sticky;
   top: 0;
@@ -36,7 +37,7 @@ li {
   flex-direction: row;
   align-items: center;
   justify-content: space-around;
-  min-width: 25vw;
+  min-width: 35vw;
 }
 .page-link {
   color: white;
@@ -49,7 +50,16 @@ li {
   border: 0px solid;
   margin-top: auto;
   margin-bottom: auto;
-  margin-right: 15px;
   padding: 10px;
   border-radius: 5px;
+}
+
+@media screen and (max-width: 991px) {
+  .home-logo {
+    height: 30px;
+  }
+  .navbar {
+    min-height: 65px;
+    height: 10vh;
+  }
 }
