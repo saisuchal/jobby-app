@@ -31,11 +31,11 @@ class Jobs extends Component {
   }
 
   componentDidMount() {
-    this.getProfile()
+    this.fetchProfile()
     this.fetchJobs()
   }
 
-  getProfile = async () => {
+  fetchProfile = async () => {
     console.log('fetching profile')
     this.setState({profileStatus: apiStatusConstants.inProgress})
     const url = 'https://apis.ccbp.in/profile'
@@ -182,7 +182,7 @@ class Jobs extends Component {
     )
 
     const jobs = (
-      <div>
+      <div className="jobs-div">
         {jobsStatus === apiStatusConstants.success && total > 0 ? (
           <ul className="jobs-list">
             {fetchedJobs.map(job => (
@@ -199,9 +199,6 @@ class Jobs extends Component {
             <h1>No Jobs Found</h1>
             <p>We could not find any jobs. Try other filters</p>
           </div>
-        )}
-        {jobsStatus === apiStatusConstants.failure && (
-          <FailureView retry={this.fetchJobs} />
         )}
       </div>
     )
@@ -221,7 +218,7 @@ class Jobs extends Component {
   }
 
   profileView = () => {
-    const {profileStatus, jobsStatus, profileDetails} = this.state
+    const {profileStatus, profileDetails} = this.state
     const {name, profileImageUrl, shortBio} = profileDetails
 
     const profileLoader = (
@@ -234,31 +231,32 @@ class Jobs extends Component {
       </div>
     )
 
-    const profile =
-      profileStatus === apiStatusConstants.failure ? (
-        <div className="profile-div">
-          <button
-            type="button"
-            className="retry-button"
-            onClick={this.getProfile}
-          >
-            Retry
-          </button>
+    const profile = (
+      <div className="profile-success-div">
+        <img src={profileImageUrl} alt="profile" />
+        <div>
+          <h1 className="profile-head">{name}</h1>
+          <p>{shortBio}</p>
         </div>
-      ) : (
-        <div className="profile-div">
-          <div className="profile-success-div">
-            <img src={profileImageUrl} alt="profile" />
-            <h1 className="profile-head">{name}</h1>
-            <p>{shortBio}</p>
-          </div>
-        </div>
-      )
+      </div>
+    )
+    const profileFailure = (
+      <div className="profile-div">
+        <button
+          type="button"
+          className="retry-button"
+          onClick={this.fetchProfile}
+        >
+          Retry
+        </button>
+      </div>
+    )
 
     switch (true) {
-      case profileStatus === apiStatusConstants.success ||
-        profileStatus === apiStatusConstants.failure:
+      case profileStatus === apiStatusConstants.success:
         return profile
+      case profileStatus === apiStatusConstants.failure:
+        return profileFailure
       case profileStatus === apiStatusConstants.inProgress:
         return profileLoader
       default:
@@ -268,30 +266,49 @@ class Jobs extends Component {
 
   render() {
     const {searchInput} = this.state
-    console.log(this.state)
     const DisplayJobs = () => this.jobsView()
     const DisplayProfile = () => this.profileView()
     return (
       <div>
         <Header />
         <div className="jobs-and-filters-div">
-          <div className="filters-div">
+          <div className="filters-profile-div">
             <DisplayProfile />
-            <hr />
-            <div className="employment-filters-div">
-              <EmploymentFilters
-                employmentFilterUpdate={this.employmentFilterUpdate}
-              />
+            <div className="filters-div">
+              <hr />
+              <div className="employment-filters-div">
+                <EmploymentFilters
+                  employmentFilterUpdate={this.employmentFilterUpdate}
+                />
+              </div>
+              <hr />
+              <div className="salary-filters-div">
+                <SalaryFilters salaryFilterUpdate={this.salaryFilterUpdate} />
+              </div>
+              <hr />
+              <div className="location-filters-div">
+                <LocationFilters
+                  locationFilterUpdate={this.locationFilterUpdate}
+                />
+              </div>
             </div>
-            <hr />
-            <div className="salary-filters-div">
-              <SalaryFilters salaryFilterUpdate={this.salaryFilterUpdate} />
-            </div>
-            <hr />
-            <div className="location-filters-div">
-              <LocationFilters
-                locationFilterUpdate={this.locationFilterUpdate}
-              />
+          </div>
+          <div className="filters-profile-large-div">
+            <DisplayProfile />
+            <div className="filters-large-div">
+              <div className="employment-filters-div">
+                <EmploymentFilters
+                  employmentFilterUpdate={this.employmentFilterUpdate}
+                />
+              </div>
+              <div className="salary-filters-div">
+                <SalaryFilters salaryFilterUpdate={this.salaryFilterUpdate} />
+              </div>
+              <div className="location-filters-div">
+                <LocationFilters
+                  locationFilterUpdate={this.locationFilterUpdate}
+                />
+              </div>
             </div>
           </div>
           <div className="results-div">
@@ -312,7 +329,7 @@ class Jobs extends Component {
                 <BsSearch className="search-icon" />
               </button>
             </div>
-            <DisplayJobs className="results-div" />
+            <DisplayJobs />
           </div>
         </div>
       </div>
