@@ -28,7 +28,7 @@ const EmploymentFilters = props => {
 
   return (
     <div>
-      <h2>Type of Employment</h2>
+      <h1 className="filter-head">Type of Employment</h1>
       <ul>
         {employmentTypesList.map(employment => (
           <EmploymentFilterItem
