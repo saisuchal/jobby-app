@@ -29,27 +29,33 @@ const JobItem = props => {
             <div>
               <h2 style={{margin: '5px'}}>{title}</h2>
               <div className="flex-row">
-                <FaStar className="icon" fill="gold" />
-                <p>{rating}</p>
+                <p>
+                  <FaStar className="icon" fill="gold" />
+                  {rating}
+                </p>
               </div>
             </div>
           </div>
           <div className="flex-details">
             <div className="job-and-location">
               <div className="location">
-                <MdLocationOn className="icon" />
-                <p>{location}</p>
+                <p>
+                  <MdLocationOn className="icon" />
+                  {location}
+                </p>
               </div>
               <div className="job-type">
-                <BsBagFill className="icon" />
-                <p>{employmentType}</p>
+                <p>
+                  <BsBagFill className="icon" />
+                  {employmentType}
+                </p>
               </div>
             </div>
             <p>{packagePerAnnum}</p>
           </div>
           <hr />
           <div className="description">
-            <h1>Description</h1>
+            <h1 className="description-head">Description</h1>
             <p>{jobDescription}</p>
           </div>
         </div>
