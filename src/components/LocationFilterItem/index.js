@@ -5,6 +5,7 @@ const LocationFilterItem = props => {
   const locationInput = () => {
     locationFilter(locationFilterItem.location)
   }
+  const employmentLocation = locationFilterItem.location
   return (
     <li value={locationFilterItem.location} className="filter-item">
       <input
@@ -12,9 +13,7 @@ const LocationFilterItem = props => {
         id={locationFilterItem.location}
         onClick={locationInput}
       />
-      <label htmlFor={locationFilterItem.location}>
-        {locationFilterItem.location}
-      </label>
+      <label htmlFor={locationFilterItem.location}>{employmentLocation}</label>
     </li>
   )
 }
