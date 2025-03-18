@@ -1,7 +1,7 @@
 .home-div {
   background-image: url('https://assets.ccbp.in/frontend/react-js/home-lg-bg.png');
   background-size: cover;
-  height: 100vh;
+  height: 90vh;
   color: white;
 }
 .home-text-div {
@@ -27,4 +27,17 @@
   padding: 10px;
   border-radius: 5px;
   font-size: 15px;
+}
+
+@media screen and (max-width: 991px) {
+  .home-intro-heading {
+    font-size: 30px;
+  }
+  .home-intro-para {
+    font-size: 18px;
+  }
+  .home-text-div {
+    padding: 10px;
+    padding-left: 30px;
+  }
 }
