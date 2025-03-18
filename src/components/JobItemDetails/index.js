@@ -109,7 +109,7 @@ class JobItemDetails extends Component {
     const {
       jobItemStatus,
       formattedSimilarJobs,
-      formattedJobDetails
+      formattedJobDetails,
     } = this.state
     const jobItemDetails = jobItemStatus === jobItemConstants.success && (
       <div className="job-details-bg">
