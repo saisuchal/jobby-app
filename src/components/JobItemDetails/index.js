@@ -106,52 +106,49 @@ class JobItemDetails extends Component {
   })
 
   jobItemDetails = () => {
-    const {
-      jobItemStatus,
-      formattedSimilarJobs,
-      formattedJobDetails,
-    } = this.state
+    const {jobItemStatus, formattedSimilarJobs, formattedJobDetails} =
+      this.state
     const jobItemDetails = jobItemStatus === jobItemConstants.success && (
       <div className="job-details-bg">
-        <div className="flex-title">
+        <div className="details-flex-title">
           <img
-            className="company-logo"
+            className="details-company-logo"
             src={formattedJobDetails.companyLogoUrl}
             alt="job details company logo"
           />
           <div>
-            <h1 className="job-details-heading" style={{marginTop: '5px'}}>
+            <h1 className="title-head" style={{marginTop: '5px'}}>
               {formattedJobDetails.title}
             </h1>
             <p>
-              <FaStar className="icon" fill="gold" />
+              <FaStar className="details-icon" fill="gold" />
               {formattedJobDetails.rating}
             </p>
           </div>
         </div>
-        <div className="flex-details">
-          <div className="job-and-location">
-            <div className="location">
+        <div className="details-div">
+          <div className="details-job-and-location">
+            <div className="details-location">
               <p>
-                <MdLocationOn className="icon" />
+                <MdLocationOn className="details-icon" />
                 {formattedJobDetails.location}
               </p>
             </div>
-            <div className="job-type">
+            <div className="details-job-type">
               <p>
-                <BsBagFill className="icon" />
+                <BsBagFill className="details-icon" />
                 {formattedJobDetails.employmentType}
               </p>
             </div>
           </div>
           <p>{formattedJobDetails.packagePerAnnum}</p>
         </div>
-        <hr />
         <div className="description">
-          <div className="description-head">
-            <h2>Description</h2>
+          <hr />
+          <div className="details-description-head">
+            <h1 className="description-head">Description</h1>
             <a
-              className="company-hyperlink"
+              className="details-company-hyperlink"
               href={formattedJobDetails.companyWebsiteUrl}
             >
               Visit
@@ -161,16 +158,16 @@ class JobItemDetails extends Component {
           <p className="para-line">{formattedJobDetails.jobDescription}</p>
         </div>
         <h3>Skills</h3>
-        <ul className="list-row">
+        <ul className="skills-row">
           {formattedJobDetails.skills.map(skill => (
-            <li key={`skill-${skill.name}`} className="list-item">
+            <li key={`skill-${skill.name}`} className="skill-item">
               <img src={skill.imageUrl} alt={skill.name} />
               <p>{skill.name}</p>
             </li>
           ))}
         </ul>
-        <div className="flex-title">
-          <div>
+        <div className="life-at-company-div">
+          <div className="life-at-company-text">
             <h3>Life at Company</h3>
             <p className="para-line">
               {formattedJobDetails.lifeAtCompany.description}
@@ -178,13 +175,14 @@ class JobItemDetails extends Component {
           </div>
           <div>
             <img
+              className="company-life-img"
               src={formattedJobDetails.lifeAtCompany.imageUrl}
               alt="life at company"
             />
           </div>
         </div>
-        <h1>Similar Jobs</h1>
-        <ul className="similar-jobs">
+        <h1 className="title-head">Similar Jobs</h1>
+        <ul className="similar-jobs-div">
           {formattedSimilarJobs.map(job => (
             <SimilarJob job={job} key={`similar-${job.id}`} />
           ))}
