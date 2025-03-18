@@ -106,8 +106,11 @@ class JobItemDetails extends Component {
   })
 
   jobItemDetails = () => {
-    const {jobItemStatus, formattedSimilarJobs, formattedJobDetails} =
-      this.state
+    const {
+      jobItemStatus,
+      formattedSimilarJobs,
+      formattedJobDetails
+    } = this.state
     const jobItemDetails = jobItemStatus === jobItemConstants.success && (
       <div className="job-details-bg">
         <div className="details-flex-title">
