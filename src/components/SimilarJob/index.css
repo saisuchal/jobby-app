@@ -1,52 +1,33 @@
-.similar-div {
-  width: 25vw;
-  margin: 10px;
-  padding: 20px;
+.similar-job {
+  max-width: 25vw;
+  margin: 5px;
+  padding: 15px;
   background-color: grey;
   border-radius: 5px;
   color: white;
 }
-
-.job {
-  background-color: #2c364c;
-  max-width: 70vw;
-  border-radius: 10px;
-  padding: 15px;
-  margin: 10px;
-}
-
-.company-logo {
-  height: 80px;
-}
-
 .similar-flex-title {
   display: flex;
   flex-direction: row;
   padding: 0px;
   margin: 0px;
 }
-.title {
-  margin: 0px;
-}
-.details {
-  display: flex;
-  flex-direction: row;
-  width: 15vw;
-  justify-content: space-between;
+
+.similar-company-logo {
+  height: 60px;
+  margin: 10px;
 }
 
-.flex-details {
+.similar-flex-details-div {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
 }
-
-.icon {
-  margin-top: 15px;
-}
-
-.heading {
-  margin: 0px;
+.similar-details {
+  display: flex;
+  flex-direction: row;
+  width: 20vw;
+  justify-content: space-around;
 }
 
 .para-line {
@@ -54,5 +35,69 @@
 }
 
 .icon {
-  margin-right: 5px;
+  margin-right: 10px;
+}
+.title-head {
+  font-size: 24px;
+}
+.description-head {
+  font-size: 24px;
+}
+
+@media screen and (min-width: 576px) and (max-width: 991px) {
+  .icon {
+    align-content: center;
+  }
+  .similar-flex-title {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+  .similar-details {
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    text-align: center;
+  }
+  .show-description {
+    display: none;
+  }
+
+  .similar-job {
+    align-items: center;
+    width: 20vw;
+  }
+}
+
+@media screen and (max-width: 575px) {
+  .icon {
+    align-content: center;
+  }
+  .similar-flex-title {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+  .similar-details {
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    text-align: center;
+  }
+  .show-description {
+    display: none;
+  }
+  .similar-job {
+    min-width: 55vw;
+    margin: 0px;
+    margin-bottom: 10px;
+  }
+  .title-head {
+    font-size: 18px;
+  }
+  .description-head {
+    font-size: 18px;
+  }
 }
