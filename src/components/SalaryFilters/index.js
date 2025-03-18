@@ -28,7 +28,7 @@ const SalaryFilters = props => {
 
   return (
     <div>
-      <h2>Salary Range</h2>
+      <h1 className="filter-head">Salary Range</h1>
       <ul id="group">
         {salaryRangesList.map(salary => (
           <SalaryFilterItem
