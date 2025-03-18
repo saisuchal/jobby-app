@@ -76,3 +76,15 @@
   font-weight: bold;
   font-size: 14px;
 }
+
+@media screen and (max-width: 991px) {
+  .login-div {
+    width: 60vw;
+  }
+  .logo {
+    width: 30vw;
+  }
+  .cred-input {
+    width: 50vw;
+  }
+}
