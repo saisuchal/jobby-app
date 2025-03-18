@@ -19,7 +19,11 @@ const NotFound = props => {
       />
       <h1>Page Not Found</h1>
       <p>We are sorry, the page you requested could not be found</p>
-      <button className="back-to-home-button" onClick={backToHome}>
+      <button
+        type="button"
+        className="back-to-home-button"
+        onClick={backToHome}
+      >
         Go Back To Home Page
       </button>
     </div>
