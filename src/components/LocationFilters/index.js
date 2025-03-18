@@ -27,7 +27,7 @@ const LocationFilters = props => {
 
   return (
     <div>
-      <h2>Location</h2>
+      <h1 className="filter-head">Location</h1>
       <ul>
         {locationsList.map(location => (
           <LocationFilterItem
